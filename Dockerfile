@@ -11,11 +11,14 @@ fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget && \
 wget https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb && \
 dpkg -i dumb-init_*.deb && rm -f dumb-init_*.deb && \
-apt-get clean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* && \
-npm install -g puppeteer@3.2.0
+apt-get clean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser && \
-  mkdir /home/puppeteer && chown 1000:1000 /home/puppeteer
+RUN groupadd pptruser && useradd -m -g pptruser -G audio,video pptruser && \
+    cd /home/pptruser && \
+    npm install puppeteer@3.2.0 && \
+    /bin/bash -l -c "echo export PUPPETEER_EXECUTABLE_PATH=$(node -e 'console.log(require("puppeteer").executablePath())')" >> /etc/bash.bashrc && \
+    /bin/bash -l -c "echo export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1" >> /etc/bash.bashrc
+       
 
 ENV LANG="C.UTF-8"
 
@@ -30,3 +33,4 @@ USER pptruser
 ENTRYPOINT ["dumb-init", "--"]
 
 CMD ["node", "index.js"]
+
