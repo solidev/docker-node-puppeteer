@@ -1,5 +1,7 @@
 FROM node:lts
-ENV UPDATED_AT="2020-04-16T17:06:56"
+
+ENV UPDATED_AT="2020-06-09T00:48:51"
+
 RUN apt-get update && \
 apt-get install -yq gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
@@ -9,11 +11,11 @@ fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget && \
 wget https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb && \
 dpkg -i dumb-init_*.deb && rm -f dumb-init_*.deb && \
-apt-get clean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
+apt-get clean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* && \
+npm install -g puppeteer@3.2.0
 
-ENV PATH="/tools:${PATH}"
-
-RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser
+RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser && \
+  mkdir /home/puppeteer && chown 1000:1000 /home/puppeteer
 
 ENV LANG="C.UTF-8"
 
