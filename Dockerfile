@@ -17,7 +17,7 @@ RUN groupadd pptruser && useradd -m -g pptruser -G audio,video pptruser && \
     cd /home/pptruser && \
     npm install puppeteer@3.2.0 && \
     /bin/bash -l -c "echo export PUPPETEER_EXECUTABLE_PATH=$(node -e 'console.log(require("puppeteer").executablePath())')" >> /etc/bash.bashrc && \
-    /bin/bash -l -c "echo export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1" >> /etc/bash.bashrc
+    /bin/bash -l -c "echo export PUPPETEER_SKIP_DOWNLOAD=1" >> /etc/bash.bashrc
        
 
 ENV LANG="C.UTF-8"
