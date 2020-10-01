@@ -1,6 +1,6 @@
 FROM node:lts
 
-ENV UPDATED_AT="2020-06-09T00:48:51"
+ENV UPDATED_AT="2020-10-01T00:48:51"
 
 RUN apt-get update && \
 apt-get install -yq gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
